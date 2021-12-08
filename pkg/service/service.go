@@ -2,6 +2,7 @@ package service
 
 import (
 	"github.com/go-redis/redis/v8"
+	"github.com/silviutroscot/istari-vision/pkg/fetcher"
 )
 
 // Service encapsulates the business logic and computation
