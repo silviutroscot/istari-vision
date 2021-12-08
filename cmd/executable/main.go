@@ -19,6 +19,6 @@ func getEnv(key, def string) string {
 	return value
 }
 
-func run() {
-	
+func run() error {
+	return nil
 }
