@@ -3,8 +3,6 @@ package fetcher
 import (
 	"net/http"
 	"time"
-
-	"github.com/silviutroscot/istari-vision/pkg/log"
 )
 
 const (
