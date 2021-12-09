@@ -9,6 +9,7 @@ import (
 	"time"
 
 	"github.com/go-redis/redis/v8"
+	"github.com/silviutroscot/istari-vision/pkg/service"
 
 	"github.com/gin-contrib/cors"
 	"github.com/gin-gonic/gin"
