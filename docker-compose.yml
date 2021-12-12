@@ -1,0 +1,54 @@
+version: '3.8'
+
+services:
+  redis-01:
+    container_name: redis-01
+    logging:
+      driver: "json-file"
+      options:
+        max-size: "50M"
+        max-file: "10"
+    image: redis:6
+    ports:
+      - "6379:6379"
+    restart: unless-stopped
+
+  istari-01:
+    container_name: istari-01
+    image: "${IMAGE}"
+    env_file:
+      - .env.prod
+    build:
+      context: ./
+      dockerfile: ./Dockerfile
+      args:
+        buildno: 1
+    logging:
+      driver: "json-file"
+      options:
+        max-size: "50M"
+        max-file: "10"
+    ports:
+      - "8080:8080"
+    restart: unless-stopped
+    depends_on:
+      - redis-01
+
+  istari-frontend-01:
+    container_name: istari-frontend-01
+    image: ${IMAGE_FRONTEND}
+    build:
+      context: ./
+      dockerfile: ./nginx.Dockerfile
+      args:
+        buildno: 2
+    logging:
+      driver: "json-file"
+      options:
+        max-size: "50M"
+        max-file: "10"
+    restart: unless-stopped
+    ports:
+      - "8081:8081"
+    depends_on:
+      - istari-01

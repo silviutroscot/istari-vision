@@ -8,6 +8,9 @@ jobs:
   build:
     name: Build
     runs-on: ubuntu-latest
+    env:
+      IMAGE: "istari"
+      IMAGE_FRONTEND: "istari-f"
 
     steps:
       - name: Set up Go 1.x
@@ -21,6 +24,9 @@ jobs:
 
       - name: Build
         run: make build
+
+      - name: Start_Redis
+        run: IMAGE=istari IMAGE_FRONTEND=istari-f docker-compose up redis-01
 
       - name: Test
         run: make test
