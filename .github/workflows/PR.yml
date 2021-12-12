@@ -22,10 +22,10 @@ jobs:
       - name: Check out code into the Go module directory
         uses: actions/checkout@v2
 
-      - name: Docker Compose Action
-        uses: isbang/compose-action@v1.0.0
-        with:
-          compose-file: './docker-compose.yml redis-01'
+#      - name: Docker Compose Action
+#        uses: isbang/compose-action@v1.0.0
+#        with:
+#          compose-file: './docker-compose.yml redis-01'
 
       - name: Build
         run: make build
