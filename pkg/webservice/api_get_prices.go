@@ -25,3 +25,4 @@ func (api *API) HandleGetPrices(c *gin.Context) {
 	c.JSON(http.StatusOK, gin.H{
 		"prices": economics.Prices,
 	})
+}
