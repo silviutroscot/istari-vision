@@ -27,7 +27,7 @@ jobs:
         run: make build
 
       - name: Start_Redis
-        run: docker-compose up redis-01
+        run: IMAGE=istari IMAGE_FRONTEND=istari-f docker-compose up redis-01 docker-compose up redis-01
 
       - name: Test
         run: make test
