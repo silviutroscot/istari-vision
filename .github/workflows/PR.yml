@@ -21,7 +21,7 @@ jobs:
 
       - uses: isbang/compose-action@v1.0.0
         with:
-          compose-file: './docker-compose.yml'
+          compose-file: 'IMAGE=istari IMAGE_FRONTEND=istari-f ./docker-compose.yml'
 
       - name: Build
         run: make build
