@@ -19,11 +19,15 @@ jobs:
       - name: Check out code into the Go module directory
         uses: actions/checkout@v2
 
+      - uses: isbang/compose-action@v1.0.0
+        with:
+          compose-file: './docker-compose.yml'
+
       - name: Build
         run: make build
 
       - name: Start_Redis
-        run: docker-compose up -d
+        run: docker-compose up redis-01
 
       - name: Test
         run: make test
