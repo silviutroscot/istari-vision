@@ -8,6 +8,9 @@ jobs:
   build:
     name: Build
     runs-on: ubuntu-latest
+    env:
+      IMAGE: "istari"
+      IMAGE_FRONTEND: "istari-f"
 
     steps:
       - name: Set up Go 1.x
@@ -19,9 +22,10 @@ jobs:
       - name: Check out code into the Go module directory
         uses: actions/checkout@v2
 
-      - uses: isbang/compose-action@v1.0.0
+      - name: Docker Compose Action
+        uses: isbang/compose-action@v1.0.0
         with:
-          compose-file: 'IMAGE=istari IMAGE_FRONTEND=istari-f ./docker-compose.yml'
+          compose-file: './docker-compose.yml'
 
       - name: Build
         run: make build
