@@ -1,0 +1,220 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8"/>
+    <meta name="viewport" content="width=device-width, initial-scale=1"/>
+    <title> Istari Challenge </title>
+
+    <meta name="description" content="Istari Challenge App">
+    <meta name="keywords" content="Istari,challenge,app,crypto">
+
+    <link href="/assets/css/main.min.css" rel="stylesheet">
+</head>
+
+<body class="bg-gray-50">
+<app-logic>
+    <div class="min-h-screen"> <!-- vertical rule -->
+        <div class="mx-auto max-w-screen-2xl"> <!-- horizontal rule -->
+            <div class="md:mx-4 lg:mx-8 md:mt-10"> <!-- no margin on mobile (fill to edge), some margin on "md", more margin on "lg+" -->
+                <main>
+                    <section id="section-inputs" class="bg-white md:shadow overflow-hidden md:rounded-lg">
+                        <div class="flex px-4 py-5 md:px-6">
+                            <div class="flex-grow">
+                                <h1 class="text-xl leading-6 font-medium text-gray-900">
+                                    Istari Challenge
+                                </h1>
+                                <p class="mt-1 max-w-2xl text-sm text-gray-500">
+                                    Profit Strategy Calculator
+                                </p>
+                            </div>
+                            <div class="flex items-center">
+                                    <span class="mr-3">
+                                        <span class="text-sm font-medium text-gray-900">You own </span>
+                                        <span class="text-sm text-yellow-500 rounded-lg bg-yellow-100 px-2">MEX & EGLD</span>
+                                    </span>
+
+                                <button name="toggle-egld-only" type="button" class="bg-yellow-200 relative inline-flex flex-shrink-0 h-6 w-11 border-2 border-transparent rounded-full cursor-pointer transition-colors ease-in-out duration-200" role="switch" aria-checked="false">
+                                    <!-- Enabled: "translate-x-5", Not Enabled: "translate-x-0" -->
+                                    <span aria-hidden="true" class="translate-x-0 pointer-events-none inline-block h-5 w-5 rounded-full bg-white shadow transform ring-0 transition ease-in-out duration-200"></span>
+                                </button>
+
+                                <span class="ml-3">
+                                        <span class="text-sm font-medium text-gray-900">You own only</span>
+                                        <span class="text-sm text-blue-500 rounded-lg bg-blue-100 px-2">EGLD</span>
+                                    </span>
+                            </div>
+                        </div>
+                        <form method="POST" action="#" class="border-t border-gray-200 px-4 py-5 md:px-6">
+                            <h2 class="text-2xl font-extrabold text-gray-900 tracking-tight sm:text-3xl">Specify Staking Strategies</h2>
+
+                            <div id="section-egld" class="mt-4">
+                                <h3 class="text-xl font-extrabold text-gray-900 tracking-tight sm:text-2xl">
+                                    EGLD
+                                    <span class="px-1 text-sm sm:text-base text-gray-700"> $ </span>
+                                </h3>
+                                <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-4 gap-4">
+                                    <div>
+                                        <label class="block text-sm font-medium text-gray-700">EGLD Tokens Invested</label>
+                                        <div class="mt-1">
+                                            <input aria-label="egld-tokens-invested" required type="number" name="egld-tokens-invested" step="0.01" min="0" class="shadow-sm block w-full sm:text-sm border-gray-300 rounded-md" placeholder="500000.00">
+                                        </div>
+                                        <p class="mt-2 text-sm text-gray-500"> Bla bla, explicatie ce inseamna, bla bla </p>
+                                    </div>
+                                    <div>
+                                        <label class="block text-sm font-medium text-gray-700">% in EGLD</label>
+                                        <div class="mt-1 relative rounded-md shadow-sm">
+                                            <input aria-label="egld-pct" required type="number" name="egld-pct" class="block w-full pr-8 sm:text-sm border-gray-300 rounded-md disabled:select-none disabled:pointer-deny disabled:bg-gray-200" step="0.01" min="0" max="100" placeholder="75.00">
+                                            <div class="absolute inset-y-0 right-0 pr-3 flex items-center pointer-events-none">
+                                                  <span class="text-gray-500 sm:text-sm">
+                                                    %
+                                                  </span>
+                                            </div>
+                                        </div>
+                                        <p class="mt-2 text-sm text-gray-500"> Bla bla, explicatie ce inseamna, bla bla </p>
+                                    </div>
+                                    <div>
+                                        <label class="block text-sm font-medium text-gray-700">EGLD Price Target</label>
+                                        <div class="mt-1 relative rounded-md shadow-sm">
+                                            <div class="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">
+                                                  <span class="text-gray-500 sm:text-sm">
+                                                    $
+                                                  </span>
+                                            </div>
+                                            <input aria-label="egld-price-target" required type="number" name="egld-price-target" class="block w-full pl-7 pr-12 sm:text-sm border-gray-300 rounded-md" step="0.01" min="0" placeholder="314.15">
+                                            <div class="absolute inset-y-0 right-0 pr-3 flex items-center pointer-events-none">
+                                                  <span class="text-gray-500 sm:text-sm">
+                                                    USD
+                                                  </span>
+                                            </div>
+                                        </div>
+                                        <p class="mt-2 text-sm text-gray-500"> Bla bla, explicatie ce inseamna, bla bla </p>
+                                    </div>
+                                    <div>
+                                        <label class="block text-sm font-medium text-gray-700">Target Date Monitored</label>
+                                        <div class="mt-1">
+                                            <input aria-label="target-date-days" required type="date" name="target-date-days" class="shadow-sm block w-full sm:text-sm border-gray-300 rounded-md">
+                                        </div>
+                                        <p class="mt-2 text-sm text-gray-500"> Bla bla, explicatie ce inseamna, bla bla </p>
+                                    </div>
+                                    <div>
+                                        <label class="block text-sm font-medium text-gray-700">Staking Provider</label>
+                                        <select aria-label="egld-staking-provider" required name="egld-staking-provider" class="mt-1 block w-full pl-3 pr-10 py-2 text-base border-gray-300 sm:text-sm rounded-md">
+                                            <option> ... </option>
+                                        </select>
+                                        <p class="mt-2 text-sm text-gray-500"> Bla bla, explicatie ce inseamna, bla bla </p>
+                                    </div>
+                                    <div>
+                                        <label class="block text-sm font-medium text-gray-700">Redelegation Interval</label>
+                                        <select aria-label="redelegation-interval" required name="redelegation-interval" class="mt-1 block w-full pl-3 pr-10 py-2 text-base border-gray-300 sm:text-sm rounded-md">
+                                            <option value="1"> Daily </option>
+                                            <option value="7"> Weekly </option>
+                                            <option value="30"> Monthly </option>
+                                        </select>
+                                        <p class="mt-2 text-sm text-gray-500"> Bla bla, explicatie ce inseamna, bla bla </p>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div id="section-mex" class="mt-8">
+                                <h3 class="text-xl font-extrabold text-gray-900 tracking-tight sm:text-2xl">
+                                    MEX
+                                    <span class="px-1 text-sm sm:text-base text-gray-700"> $ </span>
+                                </h3>
+                                <div class="flex items-center mb-8">
+                                    <span class="mr-3">
+                                        <span class="text-sm font-medium text-gray-900">Rewards in</span>
+                                        <span class="text-sm text-yellow-500 rounded-lg bg-yellow-100 px-2">MEX</span>
+                                    </span>
+                                    <!-- Enabled: "bg-indigo-600", Not Enabled: "bg-gray-200" -->
+                                    <button name="toggle-mex-locked-rewards" type="button" class="bg-yellow-200 relative inline-flex flex-shrink-0 h-6 w-11 border-2 border-transparent rounded-full cursor-pointer transition-colors ease-in-out duration-200" role="switch" aria-checked="false">
+                                        <!-- Enabled: "translate-x-5", Not Enabled: "translate-x-0" -->
+                                        <span aria-hidden="true" class="translate-x-0 pointer-events-none inline-block h-5 w-5 rounded-full bg-white shadow transform ring-0 transition ease-in-out duration-200"></span>
+                                    </button>
+                                    <span class="ml-3">
+                                        <span class="text-sm font-medium text-gray-900">Rewards in</span>
+                                        <span class="text-sm text-blue-500 rounded-lg bg-blue-100 px-2">Locked MEX</span>
+                                    </span>
+                                </div>
+                                <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-4 gap-4">
+                                    <div>
+                                        <label class="block text-sm font-medium text-gray-700">MEX Tokens Invested</label>
+                                        <div class="mt-1">
+                                            <input aria-label="mex-tokens-invested" required type="number" name="mex-tokens-invested" step="0.01" min="0" class="shadow-sm block w-full sm:text-sm border-gray-300 rounded-md" placeholder="1234.00">
+                                        </div>
+                                        <p class="mt-2 text-sm text-gray-500"> Bla bla, explicatie ce inseamna, bla bla </p>
+                                    </div>
+                                    <div>
+                                        <label class="block text-sm font-medium text-gray-700">% in MEX</label>
+                                        <div class="mt-1 relative rounded-md shadow-sm">
+                                            <input aria-label="mex-pct" required type="number" name="mex-pct" class="block w-full pr-8 sm:text-sm border-gray-300 rounded-md" step="0.01" min="0" max="100" placeholder="25.00">
+                                            <div class="absolute inset-y-0 right-0 pr-3 flex items-center pointer-events-none">
+                                                  <span class="text-gray-500 sm:text-sm">
+                                                    %
+                                                  </span>
+                                            </div>
+                                        </div>
+                                        <p class="mt-2 text-sm text-gray-500"> Bla bla, explicatie ce inseamna, bla bla </p>
+                                    </div>
+                                    <div>
+                                        <label class="block text-sm font-medium text-gray-700">MEX Price Target</label>
+                                        <div class="mt-1 relative rounded-md shadow-sm">
+                                            <div class="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">
+                                                  <span class="text-gray-500 sm:text-sm">
+                                                    $
+                                                  </span>
+                                            </div>
+                                            <input aria-label="mex-price-target" required type="number" name="mex-price-target" class="block w-full pl-7 pr-12 sm:text-sm border-gray-300 rounded-md" step="0.01" min="0" placeholder="31.40">
+                                            <div class="absolute inset-y-0 right-0 pr-3 flex items-center pointer-events-none">
+                                                  <span class="text-gray-500 sm:text-sm">
+                                                    USD
+                                                  </span>
+                                            </div>
+                                        </div>
+                                        <p class="mt-2 text-sm text-gray-500"> Bla bla, explicatie ce inseamna, bla bla </p>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="mt-8">
+                                <button name="stake" type="submit" class="inline-flex items-center px-6 py-3 border border-transparent text-base font-medium rounded-md text-green-700 bg-green-100 hover:bg-green-200">
+                                    Stake your EGLD
+                                </button>
+                            </div>
+                        </form>
+                    </section>
+
+                    <section id="section-rewards" class="bg-white md:shadow overflow-hidden md:rounded-lg mt-4">
+                        <div class="px-4 mt-4 md:px-6">
+                            <h2 class="text-2xl font-extrabold text-gray-900 tracking-tight sm:text-3xl">Your Staking Rewards</h2>
+                        </div>
+                        <div class="px-4 mt-4 md:px-6 py-5">
+                            <div id="results" class="grid grid-cols-7 gap-4 text-white text-sm font-medium">
+                                <div class="w-full col-span-2">
+                                    <div class="shadow-md p-0 rounded-lg">
+                                        <p class="h-10 p-2 bg-green-500 rounded-t-lg"> Total Reward </p>
+                                        <div class="pb-4 bg-green-400 rounded-b-lg">
+                                            <p class="text-right py-2 px-4"> in EGLD Tokens </p>
+                                            <p class="text-right py-2 px-4 bg-green-300"> in MEX Tokens </p>
+                                            <p class="text-right py-2 px-4"> in US $ </p>
+                                            <p class="text-right py-2 px-4 bg-green-300"> Total Balance in EGLD Tokens </p>
+                                            <p class="text-right py-2 px-4"> Total Balance in MEX Tokens </p>
+                                            <p class="text-right py-2 px-4 bg-green-300"> Total Balance in US $ </p>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </section>
+                </main>
+            </div>
+        </div>
+    </div>
+</app-logic>
+
+<div class="mt-12">
+    <!--footer-->
+</div>
+
+<script type="module" src="/assets/js/main.js"></script>
+</body>
+</html>

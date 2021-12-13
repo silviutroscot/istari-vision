@@ -1,0 +1,21 @@
+https://istari.troscot.com {
+  file_server
+  tls internal
+
+  root frontend/
+  try_files {path}.html {path} {path}/index.html =404
+
+  handle_errors {
+    rewrite * /{http.error.status_code}.html
+    file_server
+  }
+
+  log {
+    output stdout
+  }
+}
+
+https://istari-api.troscot.com {
+  tls internal
+  reverse_proxy 127.0.0.1:8080
+}
