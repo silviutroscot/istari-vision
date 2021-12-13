@@ -3,7 +3,7 @@
 ## Architecture
 
 - HTTP microservice / REST API
-- Swagger file describing the API
+- TODO: Swagger file describing the API
 
 ### Alternatives
 
@@ -23,8 +23,8 @@
 
 ## Testing
 
-- We use a code coverage tool that will display in README the percentage of coverage we currently have
-- The private key for that tool will be held as a repository secret
+- We use a code coverage tool that will display the percentage of coverage we currently have
+- We can add the coverage percentage in readme using codecov tool
 
 ### Unit testing
 
@@ -37,6 +37,7 @@
   understand how to make a valid request
 - Test for valid requests that the answer is calculated correctly and the response body, headers and status code are the
   expected ones
+- Todo: add integration tests for the strategies
 
 ### Load testing
 
@@ -48,16 +49,8 @@
 
 ## Questions
 
-- How can we test if the 3rd party APIs we are using are up, if they throw any error?
-- How to log to make it Loki/Elastic Search friendly?
-- Can we do load/performance testing?
-- Can we use something like a channel (to act like a queue) which stores all the requests and have multiple workers that
-  run on different threads and process the requests?
 - Should we run each strategy in a separate thread/go routine and merge the results in the end?
-- Do you think that for the future it may be an optimization to do some part (smaller) of the computation on the client
-  and the rest on the backend?
-- Is RPC used for FE-BE communication?
-- Which is CI and which is CD for an app?
+  - A: I don't think so, as the computation is very lightweight
 
 ## Deployment
 
@@ -87,7 +80,7 @@
 
 - Have Ansible + Terraform scripts to configure and set up the environments automatically
 
-- Use a queue for the requests so we can handle them if they are too many to be handled
+- Use a queue for the requests, so we can handle them if they are too many to be handled
 
 - If we add more complexity and the time to send a response increases we can send partial responses for a better user
   experience
