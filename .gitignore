@@ -49,5 +49,3 @@ fabric.properties
 ### VisualStudioCode Patch ###
 .history
 
-### FRONTEND
-frontend/assets/css/main.min.css
