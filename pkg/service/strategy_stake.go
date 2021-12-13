@@ -7,7 +7,6 @@ import (
 	"github.com/silviutroscot/istari-vision/pkg/log"
 )
 
-
 // StakeStrategy returns a StrategyResult representing the result of staking the token but not reinvesting the returns
 func (s *Service) StakeStrategy(tokenType TokenType, input *StrategiesInput, tokenInitialPrice *big.Float) (*StrategyResult, error) {
 	tokenBalance := input.EgldTokensInvested
