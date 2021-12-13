@@ -1,0 +1,31 @@
+{
+  "compilerOptions": {
+    "removeComments": true,
+    "pretty": true,
+    "alwaysStrict": true,
+    "strict": true,
+    "sourceMap": false,
+    "jsx": "preserve",
+    "declaration": true,
+    "forceConsistentCasingInFileNames": true,
+    "lib": [
+      "dom",
+      "esnext"
+    ],
+    "rootDir": "./",
+    "outDir": "../frontend/assets/js/",
+    "target": "es2017",
+    "module": "esnext",
+    "strictFunctionTypes": true,
+    "noImplicitReturns": true,
+    "noImplicitThis": true,
+    "noImplicitAny": true,
+    "strictNullChecks": true,
+    "noUnusedLocals": true,
+    "noUnusedParameters": true
+  },
+  "include": [
+    "./"
+  ],
+}
+
