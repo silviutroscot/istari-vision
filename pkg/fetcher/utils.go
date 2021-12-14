@@ -1,6 +1,7 @@
 package fetcher
 
 import (
+	"math/big"
 	"net/http"
 	"time"
 )
@@ -15,6 +16,10 @@ const (
 
 	// MexMaiarFetcherEndpoint endpoint to fetch the MEX price and the APR for locked and unlocked staking
 	MexMaiarFetcherEndpoint = "https://testnet-exchange-graph.elrond.com/graphql"
+)
+
+var (
+	BigFloatOneHundred = big.NewFloat(100)
 )
 
 // httpClient will be used as a singleton and can be reused by any request

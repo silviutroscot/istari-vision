@@ -111,8 +111,8 @@ func Test_MexEconomicsFetcherMaiar_GetMexEconomics(t *testing.T) {
 			economics, err := fetcher.FetchMexEconomics()
 			require.NoError(t, err)
 
-			assert.Equal(t, "8.577608885", economics.UnlockedRewardsAPR.String())
-			assert.Equal(t, "102.9313066", economics.LockedRewardsAPR.String())
+			assert.Equal(t, "857.7608885", economics.UnlockedRewardsAPR.String())
+			assert.Equal(t, "10293.13066", economics.LockedRewardsAPR.String())
 			assert.Equal(t, "0.0001994020661", economics.Price.String())
 		})
 
