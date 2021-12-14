@@ -87,11 +87,13 @@ func (payload *CalculateStrategiesRequestPayload) ToStrategiesInput() (*service.
 		}
 	}
 
-	strategiesInput.MexTargetPrice, err = parseBigFloat(payload.MexTargetPrice)
-	if err != nil {
-		errs = append(errs, fmt.Errorf("failed parsing field 'MexTargetPrice': %w", err))
-	} else if strategiesInput.MexTargetPrice.Cmp(service.BigFloatZero) == -1 {
-		errs = append(errs, fmt.Errorf("failed validating field 'MexTargetPrice' value '%s': %w", payload.MexTargetPrice, err))
+	if payload.MexTargetPrice != "" {
+		strategiesInput.MexTargetPrice, err = parseBigFloat(payload.MexTargetPrice)
+		if err != nil {
+			errs = append(errs, fmt.Errorf("failed parsing field 'MexTargetPrice': %w", err))
+		} else if strategiesInput.MexTargetPrice.Cmp(service.BigFloatZero) == -1 {
+			errs = append(errs, fmt.Errorf("failed validating field 'MexTargetPrice' value '%s': %w", payload.MexTargetPrice, err))
+		}
 	}
 
 	strategiesInput.EgldTargetPrice, err = parseBigFloat(payload.EgldTargetPrice)
