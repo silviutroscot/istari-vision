@@ -10,10 +10,6 @@ import (
 "github.com/silviutroscot/istari-vision/pkg/log"
 )
 
-// get mex price  --------> service ---[if expired]-->  fetcher (Interface)
-// get mex apr    __/  |             \___[else]----> cache
-// get mex economics __/
-
 type MexEconomicsFetcherMaiar struct {
 	ApiEndpoint string
 	TokenName   string
@@ -105,12 +101,15 @@ func (mf *MexEconomicsFetcherMaiar) FetchMexEconomics() (MexEconomics, error) {
 				log.Error("error parsing the MEX LockedRewardsAPR from the Maiar API response: %s", err)
 				return economics, err
 			}
+			// multiply the APR by 100 as it is not percentage
+			economics.LockedRewardsAPR.Mul(economics.LockedRewardsAPR, BigFloatOneHundred)
 
 			_, _, err = economics.UnlockedRewardsAPR.Parse(farm.UnlockedRewardsAPR, 10)
 			if err != nil {
 				log.Error("error parsing the MEX UnlockedRewardsAPR from the Maiar API response: %s", err)
 				return economics, err
 			}
+			economics.UnlockedRewardsAPR.Mul(economics.UnlockedRewardsAPR, BigFloatOneHundred)
 		}
 	}
 
