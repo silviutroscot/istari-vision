@@ -1,0 +1,1469 @@
+
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+		<title>fetcher: Go Coverage Report</title>
+		<style>
+			body {
+				background: black;
+				color: rgb(80, 80, 80);
+			}
+			body, pre, #legend span {
+				font-family: Menlo, monospace;
+				font-weight: bold;
+			}
+			#topbar {
+				background: black;
+				position: fixed;
+				top: 0; left: 0; right: 0;
+				height: 42px;
+				border-bottom: 1px solid rgb(80, 80, 80);
+			}
+			#content {
+				margin-top: 50px;
+			}
+			#nav, #legend {
+				float: left;
+				margin-left: 10px;
+			}
+			#legend {
+				margin-top: 12px;
+			}
+			#nav {
+				margin-top: 10px;
+			}
+			#legend span {
+				margin: 0 5px;
+			}
+			.cov0 { color: rgb(192, 0, 0) }
+.cov1 { color: rgb(128, 128, 128) }
+.cov2 { color: rgb(116, 140, 131) }
+.cov3 { color: rgb(104, 152, 134) }
+.cov4 { color: rgb(92, 164, 137) }
+.cov5 { color: rgb(80, 176, 140) }
+.cov6 { color: rgb(68, 188, 143) }
+.cov7 { color: rgb(56, 200, 146) }
+.cov8 { color: rgb(44, 212, 149) }
+.cov9 { color: rgb(32, 224, 152) }
+.cov10 { color: rgb(20, 236, 155) }
+
+		</style>
+	</head>
+	<body>
+		<div id="topbar">
+			<div id="nav">
+				<select id="files">
+				
+				<option value="file0">github.com/silviutroscot/istari-vision/pkg/fetcher/egld_price_coingecko.go (85.2%)</option>
+				
+				<option value="file1">github.com/silviutroscot/istari-vision/pkg/fetcher/egld_staking_providers.go (90.0%)</option>
+				
+				<option value="file2">github.com/silviutroscot/istari-vision/pkg/fetcher/mex_maiar.go (69.0%)</option>
+				
+				<option value="file3">github.com/silviutroscot/istari-vision/pkg/service/service_cache.go (0.0%)</option>
+				
+				<option value="file4">github.com/silviutroscot/istari-vision/pkg/service/service_prices.go (0.0%)</option>
+				
+				<option value="file5">github.com/silviutroscot/istari-vision/pkg/service/service_staking_providers.go (0.0%)</option>
+				
+				<option value="file6">github.com/silviutroscot/istari-vision/pkg/service/strategies.go (0.0%)</option>
+				
+				<option value="file7">github.com/silviutroscot/istari-vision/pkg/service/strategies_hold.go (86.7%)</option>
+				
+				<option value="file8">github.com/silviutroscot/istari-vision/pkg/service/strategy_redelegate.go (95.3%)</option>
+				
+				<option value="file9">github.com/silviutroscot/istari-vision/pkg/service/strategy_result_type.go (25.0%)</option>
+				
+				<option value="file10">github.com/silviutroscot/istari-vision/pkg/service/strategy_stake.go (93.6%)</option>
+				
+				<option value="file11">github.com/silviutroscot/istari-vision/pkg/service/swap.go (100.0%)</option>
+				
+				<option value="file12">github.com/silviutroscot/istari-vision/pkg/service/test_utils.go (100.0%)</option>
+				
+				<option value="file13">github.com/silviutroscot/istari-vision/pkg/service/utils.go (0.0%)</option>
+				
+				<option value="file14">github.com/silviutroscot/istari-vision/pkg/webservice/api_calculate_profit.go (0.0%)</option>
+				
+				<option value="file15">github.com/silviutroscot/istari-vision/pkg/webservice/api_get_prices.go (75.0%)</option>
+				
+				<option value="file16">github.com/silviutroscot/istari-vision/pkg/webservice/api_get_staking_providers.go (0.0%)</option>
+				
+				<option value="file17">github.com/silviutroscot/istari-vision/pkg/webservice/calculate_profit_types.go (0.0%)</option>
+				
+				<option value="file18">github.com/silviutroscot/istari-vision/pkg/webservice/webservice.go (80.0%)</option>
+				
+				</select>
+			</div>
+			<div id="legend">
+				<span>not tracked</span>
+			
+				<span class="cov0">no coverage</span>
+				<span class="cov1">low coverage</span>
+				<span class="cov2">*</span>
+				<span class="cov3">*</span>
+				<span class="cov4">*</span>
+				<span class="cov5">*</span>
+				<span class="cov6">*</span>
+				<span class="cov7">*</span>
+				<span class="cov8">*</span>
+				<span class="cov9">*</span>
+				<span class="cov10">high coverage</span>
+			
+			</div>
+		</div>
+		<div id="content">
+		
+		<pre class="file" id="file0" style="display: none">package fetcher
+
+import (
+        "encoding/json"
+        "fmt"
+        "math/big"
+        "net/http"
+        "strings"
+
+        "github.com/silviutroscot/istari-vision/pkg/log"
+)
+
+// EgldPriceFetcherCoingecko contains the URL from where we fetch the EGLD price and a function to get the price
+type EgldPriceFetcherCoingecko struct {
+        ApiEndpoint string
+        ElrondId    string
+        Currency    string
+}
+
+func (e *EgldPriceFetcherCoingecko) FetchEgldPrice() (*big.Float, error) <span class="cov10" title="4">{
+        elrondId, currency := e.ElrondId, e.Currency
+        if elrondId == "" </span><span class="cov10" title="4">{
+                elrondId = "elrond-erd-2"
+        }</span>
+        <span class="cov10" title="4">if currency == "" </span><span class="cov10" title="4">{
+                currency = "USD"
+        }</span>
+
+        <span class="cov10" title="4">req, err := http.NewRequest(http.MethodGet, e.ApiEndpoint, nil)
+        if err != nil </span><span class="cov0" title="0">{
+                log.Error("error creating the EGLD price request for endpoint %s: %s", e.ApiEndpoint, err)
+                return nil, err
+        }</span>
+
+        // set query parameters for the request; this makes a copy of the URL and we set it to the request after setting all the parameters
+        <span class="cov10" title="4">query := req.URL.Query()
+        query.Set("ids", elrondId)
+        query.Set("vs_currencies", currency)
+        req.URL.RawQuery = query.Encode()
+
+        res, err := httpClient.Do(req)
+        if err != nil </span><span class="cov1" title="1">{
+                log.Error("error retrieving the EGLD price from endpoint %s: %s", e.ApiEndpoint, err)
+                return nil, err
+        }</span>
+        <span class="cov8" title="3">defer res.Body.Close()
+
+        if res.StatusCode != http.StatusOK </span><span class="cov1" title="1">{
+                err = fmt.Errorf("error retrieving the EGLD price from endpoint %s: Response status code %d",
+                        e.ApiEndpoint, res.StatusCode)
+                log.Error("%s", err)
+                return nil, err
+        }</span>
+
+        <span class="cov5" title="2">var response struct {
+                Token map[string]float64 `json:"elrond-erd-2"`
+        }
+
+        if err := json.NewDecoder(res.Body).Decode(&amp;response); err != nil </span><span class="cov0" title="0">{
+                log.Error("Error unmarshalling the response from GET %s: %s", e.ApiEndpoint, err)
+                return nil, err
+        }</span>
+
+        <span class="cov5" title="2">return big.NewFloat(response.Token[strings.ToLower(currency)]), nil</span>
+}
+</pre>
+		
+		<pre class="file" id="file1" style="display: none">package fetcher
+
+import (
+        "encoding/json"
+        "fmt"
+        "io"
+        "net/http"
+        "strconv"
+
+        "github.com/silviutroscot/istari-vision/pkg/log"
+)
+
+type EgldStakingProvidersElrond struct {
+        ApiEndpoint string
+}
+
+func (sp *EgldStakingProvidersElrond) FetchStakingProviders() ([]EgldStakingProvider, error) <span class="cov3" title="4">{
+        // make HTTP call to retrieve the staking providers
+        res, err := httpClient.Get(sp.ApiEndpoint)
+        if err != nil </span><span class="cov1" title="1">{
+                log.Error("Error retrieving the EGLD staking providers from endpoint %s: %s", sp.ApiEndpoint, err)
+                return nil, err
+        }</span>
+        <span class="cov2" title="3">defer res.Body.Close()
+
+        if res.StatusCode != http.StatusOK </span><span class="cov1" title="1">{
+                err = fmt.Errorf("error retrieving the EGLD staking providers from endpoint %s: Response status code %d",
+                        sp.ApiEndpoint, res.StatusCode)
+                log.Error("%s", err)
+                return nil, err
+        }</span>
+
+        <span class="cov2" title="2">var providers []EgldStakingProvider
+
+        body, _ := io.ReadAll(res.Body)
+        if err = json.Unmarshal(body, &amp;providers); err != nil </span><span class="cov0" title="0">{
+                log.Error("Error unmarshalling the response from GET %s: %s", sp.ApiEndpoint, err)
+                return nil, err
+        }</span>
+
+        // give "Unknown&lt;ID&gt;" names to the staking providers that are unnamed so we can offer our users more staking options
+        <span class="cov2" title="2">unknownCount := 0
+        for idx := range providers </span><span class="cov10" title="176">{
+                if providers[idx].Identity == "" </span><span class="cov4" title="6">{
+                        providers[idx].Identity = "unknown_" + strconv.Itoa(unknownCount)
+                        unknownCount++
+                }</span>
+        }
+
+        <span class="cov2" title="2">return providers, nil</span>
+}
+</pre>
+		
+		<pre class="file" id="file2" style="display: none">package fetcher
+
+import (
+"encoding/json"
+"fmt"
+"math/big"
+"net/http"
+"strings"
+
+"github.com/silviutroscot/istari-vision/pkg/log"
+)
+
+// get mex price  --------&gt; service ---[if expired]--&gt;  fetcher (Interface)
+// get mex apr    __/  |             \___[else]----&gt; cache
+// get mex economics __/
+
+type MexEconomicsFetcherMaiar struct {
+        ApiEndpoint string
+        TokenName   string
+}
+
+const mexEconomicsMaiarQuery = `{
+  "query": "query {farms {lockedRewardsAPR unlockedRewardsAPR farmingToken{identifier name} farmToken{name} farmedTokenPriceUSD farmedToken {identifier name}}}",
+  "variables": {}
+}`
+
+func (mf *MexEconomicsFetcherMaiar) FetchMexEconomics() (MexEconomics, error) <span class="cov7" title="4">{
+        economics := MexEconomics{
+                UnlockedRewardsAPR: new(big.Float),
+                LockedRewardsAPR:   new(big.Float),
+                Price:              new(big.Float),
+        }
+
+        tokenName := mf.TokenName
+        if tokenName == "" </span><span class="cov7" title="4">{
+                tokenName = "MEXStaked"
+        }</span>
+
+        <span class="cov7" title="4">body := strings.NewReader(mexEconomicsMaiarQuery)
+
+        req, err := http.NewRequest(http.MethodPost, mf.ApiEndpoint, body)
+        if err != nil </span><span class="cov0" title="0">{
+                log.Error("error creating the request for MEX economics to endpoint %s: %s", mf.ApiEndpoint, err)
+                return economics, err
+        }</span>
+
+        <span class="cov7" title="4">req.Header.Set("Content-Type", "application/json")
+
+        res, err := httpClient.Do(req)
+        if err != nil </span><span class="cov1" title="1">{
+                log.Error("error sending the POST request for MEX economics to endpoint %s: %s", mf.ApiEndpoint, err)
+                return economics, err
+        }</span>
+        <span class="cov6" title="3">defer res.Body.Close()
+
+        if res.StatusCode != http.StatusOK </span><span class="cov1" title="1">{
+                message := fmt.Sprintf("error in the MEX economics response from endpoint %s: response status code %d",
+                        mf.ApiEndpoint, res.StatusCode)
+                log.Error(message)
+                return economics, fmt.Errorf(message)
+        }</span>
+
+        <span class="cov4" title="2">var response struct {
+                Data struct {
+                        Farms []struct {
+                                LockedRewardsAPR   string `json:"lockedRewardsAPR"`
+                                UnlockedRewardsAPR string `json:"unlockedRewardsAPR"`
+                                FarmingToken       struct {
+                                        Identifier string `json:"identifier"`
+                                        Name       string `json:"name"`
+                                } `json:"farmingToken"`
+                                FarmToken struct {
+                                        Name string `json:"name"`
+                                } `json:"farmToken"`
+                                FarmedTokenPriceUSD string `json:"farmedTokenPriceUSD"`
+                                FarmedToken         struct {
+                                        Identifier string `json:"identifier"`
+                                        Name       string `json:"name"`
+                                } `json:"farmedToken"`
+                        } `json:"farms"`
+                } `json:"data"`
+        }
+
+        if err := json.NewDecoder(res.Body).Decode(&amp;response); err != nil </span><span class="cov0" title="0">{
+                log.Error("error decoding the MEX economics JSON response: %s", err)
+                return economics, err
+        }</span>
+
+        <span class="cov4" title="2">if len(response.Data.Farms) == 0 </span><span class="cov0" title="0">{
+                err = fmt.Errorf("no MEX farms available, unable to retrieve MEX economics")
+                log.Info(err.Error())
+                return economics, err
+        }</span>
+
+        <span class="cov4" title="2">for _, farm := range response.Data.Farms </span><span class="cov10" title="6">{
+                if farm.FarmToken.Name == tokenName </span><span class="cov4" title="2">{
+                        _, _, err = economics.Price.Parse(farm.FarmedTokenPriceUSD, 10)
+                        if err != nil </span><span class="cov0" title="0">{
+                                log.Error("error parsing the MEX price in USD from the Maiar API response: %s", err)
+                                return economics, err
+                        }</span>
+
+                        <span class="cov4" title="2">_, _, err = economics.LockedRewardsAPR.Parse(farm.LockedRewardsAPR, 10)
+                        if err != nil </span><span class="cov0" title="0">{
+                                log.Error("error parsing the MEX LockedRewardsAPR from the Maiar API response: %s", err)
+                                return economics, err
+                        }</span>
+
+                        <span class="cov4" title="2">_, _, err = economics.UnlockedRewardsAPR.Parse(farm.UnlockedRewardsAPR, 10)
+                        if err != nil </span><span class="cov0" title="0">{
+                                log.Error("error parsing the MEX UnlockedRewardsAPR from the Maiar API response: %s", err)
+                                return economics, err
+                        }</span>
+                }
+        }
+
+        <span class="cov4" title="2">return economics, nil</span>
+}
+</pre>
+		
+		<pre class="file" id="file3" style="display: none">package service
+
+import (
+        "context"
+        "encoding/json"
+        "fmt"
+        "sync"
+        "time"
+
+        "github.com/silviutroscot/istari-vision/pkg/log"
+)
+
+func (s *Service) CacheCron(ctx context.Context) <span class="cov0" title="0">{
+        t := time.NewTicker(time.Minute * 5)
+        for </span><span class="cov0" title="0">{
+                select </span>{
+                case &lt;-t.C:<span class="cov0" title="0">
+                        s.updateCache()</span>
+                case &lt;-ctx.Done():<span class="cov0" title="0">
+                        t.Stop()
+                        return</span>
+                }
+        }
+}
+
+func (s *Service) CacheWarmup() error <span class="cov0" title="0">{
+        errs := s.updateCache()
+        if len(errs) &gt; 0 </span><span class="cov0" title="0">{
+                return fmt.Errorf("errors during cache warmup: %v", errs)
+        }</span>
+        <span class="cov0" title="0">return nil</span>
+}
+
+// todo: re-think caching to include both "computational" caching and "display purpose" caching
+func (s *Service) updateCache() []error {
+        anyError := make([]error, 0, 3)
+
+        cacheFuncs := []func() error{
+                s.updateCacheStakingProviders,
+                s.updateCacheMexEconomics,
+                s.updateCacheEgldPrice,
+        }
+
+        var wg sync.WaitGroup
+        wg.Add(len(cacheFuncs))
+
+        for _, f := range cacheFuncs {
+                go func(cacheFunc func() err</span><span class="cov0" title="0">or) {
+                        defer wg.Done()
+</span>                        err := cacheFunc()
+                        if err != nil {
+                                anyError = ap</span><span class="cov0" title="0">pend(anyError, err)
+                        }
+                }(</span>f)
+        }
+
+        if len(anyError) &gt; 0 {
+        <span class="cov0" title="0">        return anyError
+</span>        }
+
+</span>        return nil
+}<span class="cov0" title="0">
+</span>
+func (s *Service) updateCacheStakingProviders() error {
+        providers, err := s.EgldStakingProvidersFetcher.Fetch<span class="cov0" title="0">StakingProviders()
+        if err != nil {
+                log.Error("er</span><span class="cov0" title="0">ror fetching the EGLD staking providers from Elrond API: %s", err)
+                return err
+        }
+
+</span>        ctx, cc := context.WithTimeout(context.Background(), time.Second*5)
+        <span class="cov0" title="0">defer cc()
+
+        data, err := json.Marshal(&amp;providers)
+        if err != nil {
+                log.Error("er</span><span class="cov0" title="0">ror marshalling the EGLD staking providers structure to JSON: %s",
+                        err)
+                return err
+        }
+
+</span>        _, err = s.Cache.Set(ctx, "staking_providers_egld", data, 0).Result()
+        <span class="cov0" title="0">if err != nil {
+                log.Error("er</span><span class="cov0" title="0">ror storing the EGLD staking providers in cache: %s", err)
+                return err
+        }
+
+</span>        return nil
+}<span class="cov0" title="0">
+</span>
+func (s *Service) updateCacheMexEconomics() error {
+        mexEconomics, err := s.MexEconomicsFetcher.FetchM<span class="cov0" title="0">exEconomics()
+        if err != nil {
+                log.Error("er</span><span class="cov0" title="0">ror fetching the MEX economics from Maiar API: %s", err)
+                return err
+        }
+
+</span>        ctx, cc := context.WithTimeout(context.Background(), time.Second*5)
+        <span class="cov0" title="0">defer cc()
+
+        data, err := json.Marshal(&amp;mexEconomics)
+        if err != nil {
+                log.Error("er</span><span class="cov0" title="0">ror marshalling the MEX economics structure to JSON: %s", err)
+                return err
+        }
+
+</span>        _, err = s.Cache.Set(ctx, "mex_economics", data, 0).Result()
+        <span class="cov0" title="0">if err != nil {
+                log.Error("er</span><span class="cov0" title="0">ror storing the MEX economics in cache: %s", err)
+                return err
+        }
+
+</span>        return nil
+}<span class="cov0" title="0">
+</span>
+func (s *Service) updateCacheEgldPrice() error {
+        egldPrice, err := s.EgldPriceFetcher.FetchEgld<span class="cov0" title="0">Price()
+        if err != nil {
+                log.Error("er</span><span class="cov0" title="0">ror fetching the EGLD price in USD: %s", err)
+                return err
+        }
+
+</span>        ctx, cc := context.WithTimeout(context.Background(), time.Second*5)
+        <span class="cov0" title="0">defer cc()
+
+        data, err := json.Marshal(&amp;egldPrice)
+        if err != nil {
+                log.Error("er</span><span class="cov0" title="0">ror marshalling the EGLD price in USD to JSON: %s", err)
+                return err
+        }
+
+</span>        _, err = s.Cache.Set(ctx, "egld_price", data, 0).Result()
+        <span class="cov0" title="0">if err != nil {
+                log.Error("er</span><span class="cov0" title="0">ror storing the EGLD price in USD in cache: %s", err)
+                return err
+        }
+
+</span>        return nil
+}</pre>
+		
+		<pre class="file" id="file4" style="display: none">
+package service
+
+import (
+        "context"
+        "encoding/json"
+        "math/big"
+        "time"
+
+        "github.com/silviutroscot/istari-vision/pkg/fetcher"
+)
+
+type Prices struct {
+        EGLD string `json:"egld"`
+        MEX  string `json:"mex"`
+}
+
+type EgldPrice struct {
+        Price *big.Float
+}
+
+// Economics encapsulates the USD prices for MEX and EGLD, alongside the APR and APRMultiplier for MEX farm
+type Economics struct {
+        Prices       Prices
+        mexEconomics fetcher.MexEconomics
+}
+
+func (s *Service) GetEconomics() (Economics, error) <span class="cov0" title="0">{
+        var economics Economics
+
+        ctx, cc := context.WithTimeout(context.Background(), 10*time.Second)
+        defer cc()
+
+        // mex parsing
+        </span><span class="cov0" title="0">{
+                result, err := s.Cache.Get(ctx, "mex_economics").Result()
+                if err != nil </span><span class="cov0" title="0">{
+                        return economics, err
+                }</span>
+
+                <span class="cov0" title="0">if err := json.Unmarshal([]byte(result), &amp;economics.mexEconomics); err != nil </span><span class="cov0" title="0">{
+                        return economics, err
+                }</span>
+
+                <span class="cov0" title="0">economics.Prices.MEX = economics.mexEconomics.Price.String()</span>
+        }
+
+        // egld parsing
+        <span class="cov0" title="0">{
+                result, err := s.Cache.Get(ctx, "egld_price").Result()
+                if err != nil </span><span class="cov0" title="0">{
+                        return economics, err
+                }</span>
+
+                <span class="cov0" title="0">if err := json.Unmarshal([]byte(result), &amp;economics.Prices.EGLD); err != nil </span><span class="cov0" title="0">{
+                        return economics, err
+                }</span>
+        }
+
+        <span class="cov0" title="0">return economics, nil</span>
+}</pre>
+		
+		<pre class="file" id="file5" style="display: none">package service
+
+import (
+        "context"
+        "encoding/json"
+        "time"
+
+        "github.com/silviutroscot/istari-vision/pkg/fetcher"
+)
+
+func (s *Service) GetStakingProviders() ([]fetcher.EgldStakingProvider, error) <span class="cov0" title="0">{
+        ctx, cc := context.WithTimeout(context.Background(), time.Second*5)
+        defer cc()
+
+        result, err := s.Cache.Get(ctx, "staking_providers_egld").Result()
+        if err != nil </span><span class="cov0" title="0">{
+                return nil, err
+        }</span>
+
+        <span class="cov0" title="0">var providers []fetcher.EgldStakingProvider
+
+        if err := json.Unmarshal([]byte(result), &amp;providers); err != nil </span><span class="cov0" title="0">{
+                return nil, err
+        }</span>
+
+        <span class="cov0" title="0">return providers, nil</span>
+}</pre>
+		
+		<pre class="file" id="file6" style="display: none">package service
+
+import (
+        "fmt"
+        "math/big"
+
+        "github.com/silviutroscot/istari-vision/pkg/fetcher"
+        "github.com/silviutroscot/istari-vision/pkg/log"
+)
+
+func (s *Service) CalculateStrategies(input *StrategiesInput, egldStakingProviders []fetcher.EgldStakingProvider, economics Economics) (map[string]StrategyResultJSON, error) <span class="cov0" title="0">{
+        // wrapper over all the strategies results
+        result := make(map[string]StrategyResultJSON)
+
+        egldInitialPrice, _, err := big.ParseFloat(economics.Prices.EGLD, 10, 0, big.ToNearestEven)
+        if err != nil </span><span class="cov0" title="0">{
+                log.Error("error converting EGLD price string to float: %s", err)
+                return result, err
+        }</span>
+
+        <span class="cov0" title="0">mexInitialPrice := economics.mexEconomics.Price
+        input.MexAPRLocked.Copy(economics.mexEconomics.LockedRewardsAPR)
+        input.MexAPRUnlocked.Copy(economics.mexEconomics.UnlockedRewardsAPR)
+
+        // if the portfolio percentage distribution is provided, simulate the swap to match the distribution
+        egldToBeInvested, mexToBeInvested :=
+                s.SwapTokensToMatchDistribution(input.EgldTokensInvested, input.MexTokensInvested, input.PercentageOfPortfolioInEgld, egldInitialPrice, mexInitialPrice)
+        input.EgldTokensInvested = egldToBeInvested
+        input.MexTokensInvested = mexToBeInvested
+
+        // find the staking provider in the list of staking providers and retrieve its APR
+        egldStakingProviderWasFound := false
+        for _, egldStakingProvider := range egldStakingProviders {
+                if egldStakingProvider.Identity == input.StakingProvider</span><span class="cov0" title="0"> {
+                        input.EgldAPR.SetFloat64(egldStakingProvider.APR)
+</span>                        egldStakingProviderWasFound = true
+                        break
+                }
+</span>        }
+
+        if !egldStakingProviderWasFound {
+        <span class="cov0" title="0">        message := fmt.Sprintf("error f</span><span class="cov0" title="0">inding the staking provider %s", input.StakingProvider)
+                log.Error(message)
+                return result, fmt.Errorf(message)
+        }
+
+</span>        // if there is egld invested, compute the results for HOLD, STAKE and STAKE + REDELEGATE
+        if egldToBeInvested.Cmp(EPSILON) == 1 {
+        <span class="cov0" title="0">        // HOLD
+</span>                egldHoldResult, err := s.HoldStrategy(TokenTypeEgld, input)
+                if err != nil {
+                        log.Error("er</span><span class="cov0" title="0">ror calculating HOLD strategy for EGLD: %s", err)
+                        return result, err
+                }
+                l</span>og.Info("HOLD result token balance is %s", egldHoldResult.TotalBalanceInEgld.String())
+                <span class="cov0" title="0">result["egld_hold"] = egldHoldResult.MarshallToJSON()
+
+                // Stake
+                egldStakeResult, err := s.StakeStrategy(TokenTypeEgld, input, egldInitialPrice)
+                if err != nil {
+                        log.Error("er</span><span class="cov0" title="0">ror calculating STAKE strategy for EGLD: %s", err)
+                        return result, err
+                }
+                l</span>og.Info("egld stake result ROI is %v", egldStakeResult)
+                <span class="cov0" title="0">result["egld_stake"] = egldStakeResult.MarshallToJSON()
+
+                // Redelegate
+                egldRedelegateResult, err := s.RedelegateStrategy(TokenTypeEgld, input, egldInitialPrice)
+                if err != nil {
+                        log.Error("er</span><span class="cov0" title="0">ror calculating REDELEGATE strategy for EGLD: %s", err)
+                        return result, err
+                }
+                r</span>esult["egld_redelegate"] = egldRedelegateResult.MarshallToJSON()
+        }<span class="cov0" title="0">
+</span>
+        // if there is MEX invested, compute the results for STAKE and STAKE + REDELEGATE
+        if mexToBeInvested.Cmp(EPSILON) == 1 {
+        <span class="cov0" title="0">        // Stake
+</span>                mexStakeResult, err := s.StakeStrategy(TokenTypeMex, input, mexInitialPrice)
+                if err != nil {
+                        log.Error("er</span><span class="cov0" title="0">ror calculating STAKE strategy for MEX: %s", err)
+                        return result, err
+                }
+                r</span>esult["mex_stake"] = mexStakeResult.MarshallToJSON()
+
+                // Redelegate
+                mexRedelegateResult, err := s.RedelegateStrategy(TokenTypeMex, input, mexInitialPrice)
+                if err != nil {
+                        log.Error("er</span><span class="cov0" title="0">ror calculating REDELEGATE strategy for MEX: %s", err)
+                        return result, err
+                }
+                r</span>esult["mex_redelegate"] = mexRedelegateResult.MarshallToJSON()
+        }<span class="cov0" title="0">
+</span>
+        return result, nil
+}<span class="cov0" title="0">
+</pre>
+		
+		<pre class="file" id="file7" style="display: none">package service
+
+import (
+        "fmt"
+        "math/big"
+
+        "github.com/silviutroscot/istari-vision/pkg/log"
+)
+
+type TokenType uint8
+
+const (
+        TokenTypeUndefined TokenType = iota
+        TokenTypeEgld
+        TokenTypeMex
+
+        // FloatingPointAccuracy sets the accuracy when converting to string
+        FloatingPointAccuracy = 10
+)
+
+// StrategyResultJSON represents a StrategyResult but with all fields formatted to have 10^-10 accuracy
+type StrategyResultJSON struct {
+        ProfitInEgld       string
+        ProfitInMex        string
+        ProfitInUSD        string
+        TotalBalanceInEgld string
+        TotalBalanceInMex  string
+        TotalBalanceInUsd  string
+        ROI                string
+}
+
+
+
+
+
+// NewStrategyResult returns a 0 value StrategyResult
+func NewStrategyResult() *StrategyResult <span class="cov10" title="9">{
+        return &amp;StrategyResult{
+                ProfitInEgld:       &amp;big.Float{},
+                ProfitInMex:        &amp;big.Float{},
+                ProfitInUSD:        &amp;big.Float{},
+                TotalBalanceInEgld: &amp;big.Float{},
+                TotalBalanceInMex:  &amp;big.Float{},
+                TotalBalanceInUsd:  &amp;big.Float{},
+                ROI:                &amp;big.Float{},
+        }
+}</span>
+
+// HoldStrategy returns a StrategyResult which represent what happens if we only hold the token (either MEX or EGLD)
+func (s *Service) HoldStrategy(tokenType TokenType, input *StrategiesInput) (*StrategyResult, error) <span class="cov3" title="2">{
+        targetPrice := input.EgldTargetPrice
+        tokenBalance := input.EgldTokensInvested
+        if tokenType == TokenTypeMex </span><span class="cov1" title="1">{
+                targetPrice = input.MexTargetPrice
+                tokenBalance = input.MexTokensInvested
+        }</span>
+
+        <span class="cov3" title="2">result := NewStrategyResult()
+        result.TotalBalanceInUsd.Mul(targetPrice, tokenBalance)
+
+        log.Info("token balance is %s", tokenBalance)
+        switch tokenType </span>{
+        case TokenTypeEgld:<span class="cov1" title="1">
+                result.TotalBalanceInEgld.Copy(tokenBalance)</span>
+        case TokenTypeMex:<span class="cov1" title="1">
+                result.TotalBalanceInMex.Copy(tokenBalance)</span>
+        default:<span class="cov0" title="0">
+                log.Error("unknown token type")
+                return nil, fmt.Errorf("unknown token type '%d'", tokenType)</span>
+        }
+
+        <span class="cov3" title="2">return result, nil</span>
+}</pre>
+		
+		<pre class="file" id="file8" style="display: none">package service
+
+import (
+        "fmt"
+        "math/big"
+
+        "github.com/silviutroscot/istari-vision/pkg/log"
+)
+
+// RedelegateStrategy returns a StrategyResult representing the result of staking and redelegating the profit each RedelegateIntervalInDays days
+func (s *Service) RedelegateStrategy(tokenType TokenType, input *StrategiesInput, tokenInitialPrice *big.Float) (*StrategyResult, error) <span class="cov3" title="3">{
+        redelegateIntervalFloat := big.NewFloat(float64(input.RedelegationIntervalInDays))
+
+        // tokenBalance represents the current tokens we have
+        tokenBalance := &amp;big.Float{}
+        tokenBalance.Copy(input.EgldTokensInvested)
+        initialTokenBalance := input.EgldTokensInvested
+        tokenAPR := input.EgldAPR
+        targetPrice := input.EgldTargetPrice
+
+        if tokenType == TokenTypeMex </span><span class="cov1" title="1">{
+                tokenBalance.Copy(input.MexTokensInvested)
+                initialTokenBalance = input.MexTokensInvested
+                targetPrice = input.MexTargetPrice
+                if input.RewardsInLockedMEX </span><span class="cov0" title="0">{
+                        tokenAPR = input.MexAPRLocked
+                }</span> else<span class="cov1" title="1"> {
+                        tokenAPR = input.MexAPRUnlocked
+                }</span>
+        }
+
+        <span class="cov3" title="3">currentUSDValueFloat := big.Float{}
+        currentUSDValueFloat.Mul(tokenInitialPrice, tokenBalance)
+
+        // calculate the APR for the redelegation period (i.e. the percentage of initial investment the user gets between 2 redelegations)
+        daysInYear := big.NewFloat(365.0)
+        aprPerCycle := &amp;big.Float{}
+        aprPerCycle.Quo(redelegateIntervalFloat, daysInYear)
+
+        APRToBeReceivedInOneRedelegationCycle := &amp;big.Float{}
+        APRToBeReceivedInOneRedelegationCycle.Mul(aprPerCycle, tokenAPR)
+        APRToBeReceivedInOneRedelegationCycle.Quo(APRToBeReceivedInOneRedelegationCycle, BigFloatOneHundred)
+
+        log.Info("input.InvestmentDurationInDays is %d", input.InvestmentDurationInDays)
+        log.Info("input.RedelegationIntervalInDays is %d", input.RedelegationIntervalInDays)
+        // compound the interest for the number of redelegations cycles
+        cycleRewardsDays := input.RedelegationIntervalInDays
+        for ; cycleRewardsDays &lt;= input.InvestmentDurationInDays; cycleRewardsDays += input.RedelegationIntervalInDays </span><span class="cov10" title="52">{
+                interestReceived := &amp;big.Float{}
+                interestReceived.Mul(APRToBeReceivedInOneRedelegationCycle, tokenBalance)
+                log.Info("in REDELEGATION the earned interest for cycleDays value %d is %s", cycleRewardsDays, interestReceived.String())
+                tokenBalance.Add(tokenBalance, interestReceived)
+        }</span>
+
+        <span class="cov3" title="3">cycleRewardsDays = cycleRewardsDays - input.RedelegationIntervalInDays
+
+        log.Info("tokenBalance after cycle is %+v", tokenBalance)
+        log.Info("cycleRewardsDays is %+v", cycleRewardsDays)
+        log.Info("input.InvestmentDurationInDays is %v", input.InvestmentDurationInDays)
+        // compute the rewards for the days left between the last redelegation cycle and the remaining days
+        var remainingDays int
+        if input.InvestmentDurationInDays &gt;= cycleRewardsDays </span><span class="cov3" title="3">{
+                remainingDays = input.InvestmentDurationInDays - cycleRewardsDays
+        }</span> else<span class="cov0" title="0"> {
+                remainingDays = input.InvestmentDurationInDays
+        }</span>
+        <span class="cov3" title="3">log.Info("the remaining days are %d", remainingDays)
+
+        remainingDaysFloat := big.NewFloat(float64(remainingDays))
+
+        remainingDaysAsPercentageOfYear := &amp;big.Float{}
+        remainingDaysAsPercentageOfYear.Quo(remainingDaysFloat, daysInYear)
+
+        interestReceivedForRemainingDays := &amp;big.Float{}
+        interestReceivedForRemainingDays.Mul(remainingDaysAsPercentageOfYear, tokenAPR)
+        interestReceivedForRemainingDays.Mul(interestReceivedForRemainingDays, tokenBalance)
+        interestReceivedForRemainingDays.Quo(interestReceivedForRemainingDays, BigFloatOneHundred)
+        tokenBalance.Add(tokenBalance, interestReceivedForRemainingDays)
+
+        earnedInterestInTokens := &amp;big.Float{}
+        earnedInterestInTokens.Sub(tokenBalance, initialTokenBalance)
+        // calculate the ROI as (earnedtokens / initialTokens)
+        roi := &amp;big.Float{}
+        roi.Quo(earnedInterestInTokens, initialTokenBalance)
+        roi.Mul(roi, BigFloatOneHundred)
+
+        interestValueInUSD := &amp;big.Float{}
+        interestValueInUSD.Mul(earnedInterestInTokens, tokenInitialPrice)
+
+        result := NewStrategyResult()
+        result.ProfitInUSD.Copy(interestValueInUSD)
+        result.TotalBalanceInUsd.Mul(tokenBalance, targetPrice)
+        result.ROI.Copy(roi)
+
+        switch tokenType </span>{
+        case TokenTypeEgld:<span class="cov2" title="2">
+                result.ProfitInEgld.Copy(earnedInterestInTokens)
+                result.TotalBalanceInEgld.Copy(tokenBalance)</span>
+        case TokenTypeMex:<span class="cov1" title="1">
+                result.ProfitInMex.Copy(earnedInterestInTokens)
+                result.TotalBalanceInMex.Copy(tokenBalance)</span>
+        default:<span class="cov0" title="0">
+                return nil, fmt.Errorf("unknown token type '%d'", tokenType)</span>
+        }
+
+        <span class="cov3" title="3">return result, nil</span>
+}
+</pre>
+		
+		<pre class="file" id="file9" style="display: none">package service
+
+import (
+        "math/big"
+
+        "github.com/silviutroscot/istari-vision/pkg/log"
+)
+
+
+
+type StrategyResult struct {
+        // ProfitInEgld the amount of EGLD earned using a strategy
+        ProfitInEgld *big.Float
+        // ProfitInMex the amount of MEX earned using a strategy
+        ProfitInMex *big.Float
+        // ProfitInUSD the
+        ProfitInUSD *big.Float
+        // TotalBalanceInEgld the amount of EGLD owned at the end of the monitored time interval
+        TotalBalanceInEgld *big.Float
+        // TotalBalanceInMex the amount of MEX owned at the end of the monitored time interval
+        TotalBalanceInMex *big.Float
+        // TotalBalanceInUsd the value in USD of EGLD + MEX, using their target value
+        TotalBalanceInUsd *big.Float
+        // ROI the percentage of profit we make in terms of EGLD; i.e. if at the beginning we invested 1 EGLD, and now we have 2 EGLD, ROI=100%
+        ROI *big.Float
+}
+
+// Equals return true if the other StrategyResult equals the strategy
+func (r *StrategyResult) Equals(other *StrategyResult) bool <span class="cov10" title="2">{
+        log.Info("StrategyResult is %+v", r)
+        log.Info("other is %+v", other)
+        return BigFloatsAreEqual(*r.ProfitInEgld, *other.ProfitInEgld) &amp;&amp;
+                BigFloatsAreEqual(*r.ProfitInMex, *other.ProfitInMex) &amp;&amp;
+                BigFloatsAreEqual(*r.ProfitInUSD, *other.ProfitInUSD) &amp;&amp;
+                BigFloatsAreEqual(*r.TotalBalanceInEgld, *other.TotalBalanceInEgld) &amp;&amp;
+                BigFloatsAreEqual(*r.TotalBalanceInMex, *other.TotalBalanceInMex) &amp;&amp;
+                BigFloatsAreEqual(*r.TotalBalanceInUsd, *other.TotalBalanceInUsd) &amp;&amp;
+                BigFloatsAreEqual(*r.ROI, *other.ROI)
+}</span>
+
+func (r *StrategyResult) MarshallToJSON() StrategyResultJSON <span class="cov0" title="0">{
+        result := StrategyResultJSON{}
+        result.ProfitInEgld = r.ProfitInEgld.Text('f', FloatingPointAccuracy)
+        result.ProfitInMex = r.ProfitInMex.Text('f', FloatingPointAccuracy)
+        result.ProfitInUSD = r.ProfitInUSD.Text('f', FloatingPointAccuracy)
+        result.TotalBalanceInEgld = r.TotalBalanceInEgld.Text('f', FloatingPointAccuracy)
+        result.TotalBalanceInMex = r.TotalBalanceInMex.Text('f', FloatingPointAccuracy)
+        result.TotalBalanceInUsd = r.TotalBalanceInUsd.Text('f', FloatingPointAccuracy)
+        // use a more aggressive truncation for ROI
+        result.ROI = r.ROI.Text('f', 6)
+
+        return result
+}</span>
+
+
+</pre>
+		
+		<pre class="file" id="file10" style="display: none">package service
+
+import (
+        "fmt"
+        "math/big"
+
+        "github.com/silviutroscot/istari-vision/pkg/log"
+)
+
+// StakeStrategy returns a StrategyResult representing the result of staking the token but not reinvesting the returns
+func (s *Service) StakeStrategy(tokenType TokenType, input *StrategiesInput, tokenInitialPrice *big.Float) (*StrategyResult, error) <span class="cov10" title="4">{
+        tokenBalance := input.EgldTokensInvested
+        tokenAPR := input.EgldAPR
+        targetPrice := input.EgldTargetPrice
+
+        if tokenType == TokenTypeMex </span><span class="cov5" title="2">{
+                tokenBalance = input.MexTokensInvested
+                targetPrice = input.MexTargetPrice
+                if input.RewardsInLockedMEX </span><span class="cov0" title="0">{
+                        tokenAPR = input.MexAPRLocked
+                }</span> else<span class="cov5" title="2"> {
+                        tokenAPR = input.MexAPRUnlocked
+                }</span>
+        }
+        <span class="cov10" title="4">log.Info("tokenAPR is %s", tokenAPR.String())
+
+        currentUSDValueFloat := big.Float{}
+        currentUSDValueFloat.Mul(tokenInitialPrice, tokenBalance)
+
+        // divide the number of days by the number of days of a year to get the percentage of the APR we get
+        daysInYear := big.NewFloat(365.0)
+        investmentDurationInDays := big.NewFloat(float64(input.InvestmentDurationInDays))
+        percentageOfTheYearReceivingAPR := &amp;big.Float{}
+        percentageOfTheYearReceivingAPR.Quo(investmentDurationInDays, daysInYear)
+        log.Info("investmentDurationInDays is %s", investmentDurationInDays.String())
+        log.Info("percentageOfTheYearReceivingAPR is %s", percentageOfTheYearReceivingAPR.String())
+
+        APRToBeReceived := &amp;big.Float{}
+        APRToBeReceived.Mul(tokenAPR, percentageOfTheYearReceivingAPR)
+        APRToBeReceived.Quo(APRToBeReceived, big.NewFloat(100.0))
+        log.Info("apr to be received is %s", APRToBeReceived)
+        log.Info("tokens balance is %s", tokenBalance)
+
+        tokensReceivedFromStaking := &amp;big.Float{}
+        tokensReceivedFromStaking.Mul(APRToBeReceived, tokenBalance)
+
+        // calculate the ROI as the earned tokens / initial tokens balance
+        roi := &amp;big.Float{}
+        roi.Quo(tokensReceivedFromStaking, tokenBalance)
+        roi.Mul(roi, BigFloatOneHundred)
+        log.Info("tokens received from staking are %s", tokensReceivedFromStaking)
+
+        // USDValueOfEarnedTokens represents the USD value of the earned tokens using the current price of the token
+        USDValueOfEarnedTokens := &amp;big.Float{}
+        USDValueOfEarnedTokens.Mul(tokensReceivedFromStaking, tokenInitialPrice)
+
+        totalTokensBalance := &amp;big.Float{}
+        totalTokensBalance.Add(tokensReceivedFromStaking, tokenBalance)
+
+        totalUSDValue := &amp;big.Float{}
+        totalUSDValue.Mul(totalTokensBalance, targetPrice)
+
+        result := NewStrategyResult()
+        result.TotalBalanceInUsd = totalUSDValue
+        result.ProfitInUSD = USDValueOfEarnedTokens
+        result.ROI = roi
+
+        switch tokenType </span>{
+        case TokenTypeEgld:<span class="cov5" title="2">
+                result.ProfitInEgld = tokensReceivedFromStaking
+                result.TotalBalanceInEgld = totalTokensBalance</span>
+        case TokenTypeMex:<span class="cov5" title="2">
+                result.ProfitInMex = tokensReceivedFromStaking
+                result.TotalBalanceInMex = totalTokensBalance</span>
+        default:<span class="cov0" title="0">
+                log.Error("unknown token type")
+                return nil, fmt.Errorf("unknown token type '%d'", tokenType)</span>
+        }
+
+        <span class="cov10" title="4">return result, nil</span>
+}
+</pre>
+		
+		<pre class="file" id="file11" style="display: none">package service
+
+import (
+        "math/big"
+)
+
+const (
+        FloatPrecision = 30
+)
+
+// SwapTokens returns the amount of destinationToken corresponding to the amount of firstToken provided, based on their USD price
+func SwapTokens(amount, firstTokenValueInUSD, destinationTokenValueInUSD *big.Float) *big.Float <span class="cov10" title="6">{
+        egldToMexRate := &amp;big.Float{}
+        egldToMexRate.Quo(firstTokenValueInUSD, destinationTokenValueInUSD)
+
+        convertedMexAmount := &amp;big.Float{}
+        convertedMexAmount.Mul(amount, egldToMexRate)
+
+        return convertedMexAmount
+}</span>
+</pre>
+		
+		<pre class="file" id="file12" style="display: none">package service
+
+import (
+        "math"
+        "math/big"
+)
+
+var (
+        EPSILON = big.NewFloat(1/math.Pow(10, 10))
+)
+
+func BigFloatsAreEqual(x, y big.Float) bool <span class="cov10" title="35">{
+        copyX := &amp;big.Float{}
+        copyY := &amp;big.Float{}
+        x.Copy(copyX)
+        y.Copy(copyY)
+        return copyX.Sub(copyX, copyY).Abs(copyX).Cmp(EPSILON) &lt; 1
+}</span>
+</pre>
+		
+		<pre class="file" id="file13" style="display: none">package service
+
+import (
+"math/big"
+
+"github.com/silviutroscot/istari-vision/pkg/log"
+)
+
+var (
+        BigFloatZero       = big.NewFloat(0)
+        BigFloatDaysInYear = big.NewFloat(365)
+        BigFloatOneHundred = big.NewFloat(100)
+)
+
+// SwapTokensToMatchDistribution returns the amount of EGLD and MEX needed to match the required distribution, based on the USD value
+func (s *Service) SwapTokensToMatchDistribution(EGLDTokensBalance, MEXTokensBalance, EGLDPercentage, EGLDPrice, MEXPrice *big.Float) (*big.Float, *big.Float) <span class="cov0" title="0">{
+        // compute the total EGLD to know the amount of EGLD needed to match the distribution
+        mexInlEgldBalance := SwapTokens(MEXTokensBalance, MEXPrice, EGLDPrice)
+
+        totalEgldBalance := &amp;big.Float{}
+        totalEgldBalance.Add(mexInlEgldBalance, EGLDTokensBalance)
+
+        // targetEGLDBalance represents the EGLD we should have to match the distribution requirement
+        targetEGLDBalance := &amp;big.Float{}
+        targetEGLDBalance.Quo(totalEgldBalance, BigFloatOneHundred)
+        targetEGLDBalance.Mul(targetEGLDBalance, EGLDPercentage)
+
+        // the remaining amount of EGLD can be converted to MEX and that will represent that percentage of the wallet value that should be in MEX
+        var targetMEXBalanceInEGLD big.Float
+        targetMEXBalanceInEGLD.Sub(totalEgldBalance, targetEGLDBalance)
+        log.Debug("totalEgldBalance is %v", &amp;totalEgldBalance)
+        log.Debug("targetMEXBalanceInEGLD is %v", &amp;targetMEXBalanceInEGLD)
+
+        mexTargetBalance := SwapTokens(&amp;targetMEXBalanceInEGLD, EGLDPrice, MEXPrice)
+
+        return targetEGLDBalance, mexTargetBalance
+}</span>
+
+</pre>
+		
+		<pre class="file" id="file14" style="display: none">package webservice
+
+import (
+        "net/http"
+
+        "github.com/gin-gonic/gin"
+        "github.com/silviutroscot/istari-vision/pkg/log"
+)
+
+func (api *API) HandlePostCalculateProfit(c *gin.Context) <span class="cov0" title="0">{
+        var requestPayload CalculateStrategiesRequestPayload
+
+        err := c.BindJSON(&amp;requestPayload)
+        if err != nil </span><span class="cov0" title="0">{
+                log.Error("error binding the request payload: %s", err)
+                c.Status(http.StatusBadRequest)
+                return
+        }</span>
+
+        <span class="cov0" title="0">strategiesInput, errs := requestPayload.ToStrategiesInput()
+        if errs != nil </span><span class="cov0" title="0">{
+                errsStrings := make([]string, len(errs))
+                for i, err := range errs </span><span class="cov0" title="0">{
+                        errsStrings[i] = err.Error()
+                }</span>
+
+                <span class="cov0" title="0">c.JSON(http.StatusBadRequest, gin.H{
+                        "errors": errsStrings,
+                })
+                return</span>
+        }
+
+        <span class="cov0" title="0">egldStakingProviders, err := api.service.GetStakingProviders()
+        if err != nil </span><span class="cov0" title="0">{
+                log.Error("error retrieving the EGLD staking providers: %s", err)
+                c.JSON(http.StatusInternalServerError, gin.H{
+                        "error": err,
+                })
+                return
+        }</span>
+
+        <span class="cov0" title="0">economics, err := api.service.GetEconomics()
+        if err != nil </span><span class="cov0" title="0">{
+                log.Error("error retrieving the economics: %s", err)
+                c.JSON(http.StatusInternalServerError, gin.H{
+                        "error": err,
+                })
+        }</span>
+
+        <span class="cov0" title="0">results, err := api.service.CalculateStrategies(strategiesInput, egldStakingProviders, economics)
+        if err != nil </span><span class="cov0" title="0">{
+                c.JSON(http.StatusInternalServerError, gin.H{
+                        "error": err,
+                })
+                return
+        }</span>
+
+        <span class="cov0" title="0">c.JSON(http.StatusOK, gin.H{
+                "results": results,
+                "prices":  economics.Prices,
+        })</span>
+}</pre>
+		
+		<pre class="file" id="file15" style="display: none">package webservice
+
+import (
+        "errors"
+        "net/http"
+
+        "github.com/go-redis/redis/v8"
+
+        "github.com/gin-gonic/gin"
+)
+
+// HandleGetPrices returns a JSON containing the live price for EGLD and MEX
+func (api *API) HandleGetPrices(c *gin.Context) <span class="cov10" title="2">{
+        economics, err := api.service.GetEconomics()
+        if err != nil </span><span class="cov1" title="1">{
+                if errors.Is(err, redis.Nil) </span><span class="cov1" title="1">{
+                        c.JSON(http.StatusNotFound, gin.H{"error": "no prices found"})
+                        return
+                }</span>
+
+                <span class="cov0" title="0">c.JSON(http.StatusInternalServerError, gin.H{"error": err.Error()})
+                return</span>
+        }
+
+        <span class="cov1" title="1">c.JSON(http.StatusOK, gin.H{
+                "prices": economics.Prices,
+        })</span>
+}</pre>
+		
+		<pre class="file" id="file16" style="display: none">package webservice
+
+import (
+        "errors"
+        "net/http"
+
+        "github.com/go-redis/redis/v8"
+
+        "github.com/gin-gonic/gin"
+)
+
+func (api *API) HandleGetEgldStakingProviders(c *gin.Context) <span class="cov0" title="0">{
+        stakingProviders, err := api.service.GetStakingProviders()
+        if err != nil </span><span class="cov0" title="0">{
+                if errors.Is(err, redis.Nil) </span><span class="cov0" title="0">{
+                        c.JSON(http.StatusNotFound, gin.H{
+                                "message": "no staking providers found",
+                        })
+                        return
+                }</span>
+
+                <span class="cov0" title="0">c.JSON(http.StatusInternalServerError, gin.H{"error": err})
+                return</span>
+        }
+
+        <span class="cov0" title="0">c.JSON(http.StatusOK, gin.H{
+                "staking_providers": stakingProviders,
+        })</span>
+}</pre>
+		
+		<pre class="file" id="file17" style="display: none">package webservice
+
+import (
+        "errors"
+        "fmt"
+        "math/big"
+        
+        "github.com/silviutroscot/istari-vision/pkg/service"
+)
+
+// todo: move the comments for fields here
+type CalculateStrategiesRequestPayload struct {
+        // If MEXTokensInvested is provided, the PercentageOfPortfolioInEGLD and PercentageOfPortfolioInMEX is not used as we don't do any swaps
+        // If MexTokensInvested is not provided and PercentageOfPortfolioInMEX &gt; 0, convert that percentage of the EGLD invested to MEX as we get the request, using the live prices
+        EGLDTokensInvested          string `json:"egld-tokens-invested"`
+        MEXTokensInvested           string `json:"mex-tokens-invested"`
+        PercentageOfPortfolioInEGLD string `json:"egld-pct"`
+        PercentageOfPortfolioInMEX  string `json:"mex-pct"`
+
+        // RewardsInLockedMEX is true if the user wants their MEX rewards to be in LockedMEX and false otherwise
+        RewardsInLockedMEX bool   `json:"mex-rewards-locked"`
+        EgldTargetPrice    string `json:"egld-price-target"`
+
+        //MexTargetPrice can be 0 if the user wants to invest EGLD only
+        MexTargetPrice           string `json:"mex-price-target"`
+        InvestmentDurationInDays int    `json:"target-date-days"`
+        RedelegationPeriodInDays int    `json:"redelegation-interval"`
+        StakingProvider          string `json:"egld-staking-provider"`
+}
+
+// ToStrategiesInput returns an instance of service.StrategiesInput representing the parsed inputs and a list of
+// errors for invalid fields
+// todo: add unit tests
+// todo: refactor use of repetitive parsing into generic function
+func (payload *CalculateStrategiesRequestPayload) ToStrategiesInput() (*service.StrategiesInput, []error) <span class="cov0" title="0">{
+        var err error
+        var errs []error
+
+        strategiesInput := &amp;service.StrategiesInput{
+                EgldTokensInvested:          &amp;big.Float{},
+                MexTokensInvested:           &amp;big.Float{},
+                PercentageOfPortfolioInEgld: &amp;big.Float{},
+                PercentageOfPortfolioInMex:  &amp;big.Float{},
+                RewardsInLockedMEX:          payload.RewardsInLockedMEX,
+                EgldTargetPrice:             &amp;big.Float{},
+                MexTargetPrice:              &amp;big.Float{},
+                EgldAPR:                     &amp;big.Float{},
+                MexAPRLocked:                &amp;big.Float{},
+                MexAPRUnlocked:              &amp;big.Float{},
+                InvestmentDurationInDays:    0,
+                RedelegationIntervalInDays:  0,
+                StakingProvider:             payload.StakingProvider,
+        }
+
+        if payload.EGLDTokensInvested != "" </span><span class="cov0" title="0">{
+                strategiesInput.EgldTokensInvested, err = parseBigFloat(payload.EGLDTokensInvested)
+                if err != nil </span><span class="cov0" title="0">{
+                        errs = append(errs, fmt.Errorf("failed parsing field 'EGLDTokensInvested': %w", err))
+                }</span> else<span class="cov0" title="0"> if strategiesInput.EgldTokensInvested.Cmp(service.BigFloatZero) == -1 </span><span class="cov0" title="0">{
+                        errs = append(errs, fmt.Errorf("failed validating field 'EGLDTokensInvested' value '%s': %w", payload.EGLDTokensInvested, err))
+                }</span>
+        }
+
+        <span class="cov0" title="0">if payload.MEXTokensInvested != "" </span><span class="cov0" title="0">{
+                strategiesInput.MexTokensInvested, err = parseBigFloat(payload.MEXTokensInvested)
+                if err != nil </span><span class="cov0" title="0">{
+                        errs = append(errs, fmt.Errorf("failed parsing field 'MexTokensInvested': %w", err))
+                }</span> else<span class="cov0" title="0"> if strategiesInput.MexTokensInvested.Cmp(service.BigFloatZero) == -1 </span><span class="cov0" title="0">{
+                        errs = append(errs, fmt.Errorf("failed validating field 'MexTokensInvested' value '%s': %w", payload.MEXTokensInvested, err))
+                }</span>
+        }
+
+        <span class="cov0" title="0">if payload.PercentageOfPortfolioInEGLD != "" </span><span class="cov0" title="0">{
+                strategiesInput.PercentageOfPortfolioInEgld, err = parseBigFloat(payload.PercentageOfPortfolioInEGLD)
+                if err != nil </span><span class="cov0" title="0">{
+                        errs = append(errs, fmt.Errorf("failed parsing field 'PercentageOfPortfolioInEgld': %w", err))
+                }</span> else<span class="cov0" title="0"> if strategiesInput.PercentageOfPortfolioInEgld.Cmp(service.BigFloatZero) == -1 || strategiesInput.PercentageOfPortfolioInEgld.Cmp(service.BigFloatOneHundred) == 1 </span><span class="cov0" title="0">{
+                        errs = append(errs, fmt.Errorf("failed validating field 'PercentageOfPortfolioInEgld' value '%s': %w", payload.PercentageOfPortfolioInEGLD, err))
+                }</span>
+        }
+
+        <span class="cov0" title="0">if payload.PercentageOfPortfolioInMEX != "" </span><span class="cov0" title="0">{
+                strategiesInput.PercentageOfPortfolioInMex, err = parseBigFloat(payload.PercentageOfPortfolioInMEX)
+                if err != nil </span><span class="cov0" title="0">{
+                        errs = append(errs, fmt.Errorf("failed parsing field 'PercentageOfPortfolioInMex': %w", err))
+                }</span> else<span class="cov0" title="0"> if strategiesInput.PercentageOfPortfolioInMex.Cmp(service.BigFloatZero) == -1 || strategiesInput.PercentageOfPortfolioInMex.Cmp(service.BigFloatOneHundred) == 1 </span><span class="cov0" title="0">{
+                        errs = append(errs, fmt.Errorf("failed validating field 'PercentageOfPortfolioInMex' value '%s': %w", payload.PercentageOfPortfolioInMEX, err))
+                }</span>
+        }
+
+        <span class="cov0" title="0">if payload.MexTargetPrice != "" </span><span class="cov0" title="0">{
+                strategiesInput.MexTargetPrice, err = parseBigFloat(payload.MexTargetPrice)
+                if err != nil </span><span class="cov0" title="0">{
+                        errs = append(errs, fmt.Errorf("failed parsing field 'MexTargetPrice': %w", err))
+                }</span> else<span class="cov0" title="0"> if strategiesInput.MexTargetPrice.Cmp(service.BigFloatZero) == -1 </span><span class="cov0" title="0">{
+                        errs = append(errs, fmt.Errorf("failed validating field 'MexTargetPrice' value '%s': %w", payload.MexTargetPrice, err))
+                }</span>
+        }
+
+        <span class="cov0" title="0">strategiesInput.EgldTargetPrice, err = parseBigFloat(payload.EgldTargetPrice)
+        if err != nil </span><span class="cov0" title="0">{
+                errs = append(errs, fmt.Errorf("failed parsing field 'EgldTargetPrice': %w", err))
+        }</span> else<span class="cov0" title="0"> if strategiesInput.EgldTargetPrice.Cmp(service.BigFloatZero) == -1 </span><span class="cov0" title="0">{
+                errs = append(errs, fmt.Errorf("failed validating field 'EgldTargetPrice' value '%s': %w", payload.EgldTargetPrice, err))
+        }</span>
+
+        <span class="cov0" title="0">strategiesInput.InvestmentDurationInDays = payload.InvestmentDurationInDays
+        strategiesInput.RedelegationIntervalInDays = payload.RedelegationPeriodInDays
+
+        // verify that the sum of percentages in MEX and EGLD is 100
+        percentageSum := &amp;big.Float{}
+        percentageSum.Add(strategiesInput.PercentageOfPortfolioInEgld, strategiesInput.PercentageOfPortfolioInMex)
+        if !service.BigFloatsAreEqual(*percentageSum, *service.BigFloatOneHundred) </span><span class="cov0" title="0">{
+                errs = append(errs, errors.New("the sum of the pecentages is not 100%"))
+        }</span>
+
+        <span class="cov0" title="0">if len(errs) != 0 </span><span class="cov0" title="0">{
+                return nil, errs
+        }</span>
+
+        <span class="cov0" title="0">return strategiesInput, nil</span>
+}
+
+func parseBigFloat(input string) (*big.Float, error) <span class="cov0" title="0">{
+        f, _, err := big.ParseFloat(input, 10, 0, big.ToNearestEven)
+        return f, err
+}</span>
+</pre>
+		
+		<pre class="file" id="file18" style="display: none">package webservice
+
+import (
+        "context"
+        "fmt"
+        "net/http"
+        "os"
+        "strings"
+        "time"
+
+        "github.com/go-redis/redis/v8"
+        "github.com/silviutroscot/istari-vision/pkg/service"
+
+        "github.com/gin-contrib/cors"
+        "github.com/gin-gonic/gin"
+)
+
+func init() <span class="cov1" title="1">{
+        gin.SetMode(gin.DebugMode)
+}</span>
+
+type API struct {
+        Address string
+
+        engine  *gin.Engine
+        service *service.Service
+}
+
+// NewAPI creates a new instance of a WebServer, which encapsulates the router and the dependencies of the WebService
+func NewAPI(service *service.Service) *API <span class="cov1" title="1">{
+        // create a new HTTP router engine
+        engine := gin.New()
+        engine.Use(gin.Recovery())
+
+        engine.GET("/health.txt", func(c *gin.Context) </span><span class="cov0" title="0">{
+                c.String(http.StatusOK, "ok")
+        }</span>)
+
+        <span class="cov1" title="1">return &amp;API{
+                engine:  engine,
+                service: service,
+        }</span>
+}
+
+// handleRateLimiting is a middleware that handles the rate limiting of the requests by only allowing 'limit'
+// requests to happen, for the given 'duration' starting from the first request (identified by 'ipHeader' http header)
+func handleRateLimiting(keyBase, ipHeader string, limit int64, duration time.Duration, cache *redis.Client) gin.HandlerFunc <span class="cov1" title="1">{
+        return func(c *gin.Context) </span><span class="cov10" title="2">{
+                ctx, cc := context.WithTimeout(context.Background(), time.Second*5)
+                defer cc()
+
+                ip := c.GetHeader(ipHeader)
+
+                result, err := cache.Incr(ctx, keyBase+":"+ip).Result()
+                if err != nil </span><span class="cov0" title="0">{
+                        _ = c.AbortWithError(http.StatusInternalServerError, err)
+                        return
+                }</span>
+
+                <span class="cov10" title="2">if result == 1 </span><span class="cov1" title="1">{
+                        _ = cache.Expire(ctx, keyBase+":"+ip, duration).Err()
+                }</span> else<span class="cov1" title="1"> if result &gt; limit </span><span class="cov0" title="0">{
+                        _ = c.AbortWithError(http.StatusTooManyRequests, fmt.Errorf("too many requests"))
+                        return
+                }</span>
+        }
+}
+
+func (api *API) Setup() error <span class="cov1" title="1">{
+        // Enable CORS; CORS allows browser to accept and 'authorize' requests from the right (expected) 'site' and 'cross site' (as defined in RFCxxxx).
+        // todo: update the variable `CORS_ORIGINS` in the .env file when it will be in production to use the right domains only
+        corsOrigins := strings.Split(os.Getenv("CORS_ORIGINS"), ",")
+        if len(corsOrigins) == 0 || corsOrigins[0] == "" </span><span class="cov1" title="1">{
+                corsOrigins = []string{"*"}
+        }</span>
+
+        <span class="cov1" title="1">api.engine.Use(cors.New(cors.Config{
+                AllowOrigins:     corsOrigins,
+                AllowMethods:     []string{"GET", "PUT", "PATCH", "POST", "DELETE"},
+                AllowHeaders:     []string{"Origin", "Content-Type", "Content-Length"},
+                ExposeHeaders:    []string{"Content-Length"},
+                AllowCredentials: true,
+                MaxAge:           1 * time.Minute, // todo: increase time to 12h; this represents for how long it will be cached in browser
+        }))
+
+        apiGroup := api.engine.Group("/api", handleRateLimiting("rate_limit", "X-Client-IP", 200, time.Minute, api.service.Cache))
+        </span><span class="cov1" title="1">{
+                apiGroup.GET("/egld_staking_providers", api.HandleGetEgldStakingProviders)
+                apiGroup.GET("/prices", api.HandleGetPrices)
+                apiGroup.POST("/calculate_profit", api.HandlePostCalculateProfit)
+        }</span>
+
+        <span class="cov1" title="1">return nil</span>
+}
+
+func (api *API) Run() error <span class="cov0" title="0">{
+        return api.engine.Run(api.Address)
+}</span>
+</pre>
+		
+		</div>
+	</body>
+	<script>
+	(function() {
+		var files = document.getElementById('files');
+		var visible;
+		files.addEventListener('change', onChange, false);
+		function select(part) {
+			if (visible)
+				visible.style.display = 'none';
+			visible = document.getElementById(part);
+			if (!visible)
+				return;
+			files.value = part;
+			visible.style.display = 'block';
+			location.hash = part;
+		}
+		function onChange() {
+			select(files.value);
+			window.scrollTo(0, 0);
+		}
+		if (location.hash != "") {
+			select(location.hash.substr(1));
+		}
+		if (!visible) {
+			select("file0");
+		}
+	})();
+	</script>
+</html>

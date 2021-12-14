@@ -23,7 +23,6 @@ func (s *Service) CalculateStrategies(input *StrategiesInput, egldStakingProvide
 	input.MexAPRUnlocked.Copy(economics.mexEconomics.UnlockedRewardsAPR)
 
 	// if the portfolio percentage distribution is provided, simulate the swap to match the distribution
-	// todo: if the user provides percentage of portofolio in egld do this, else don't match the distribution as it is not provided
 	egldToBeInvested, mexToBeInvested :=
 		s.SwapTokensToMatchDistribution(input.EgldTokensInvested, input.MexTokensInvested, input.PercentageOfPortfolioInEgld, egldInitialPrice, mexInitialPrice)
 	input.EgldTokensInvested = egldToBeInvested

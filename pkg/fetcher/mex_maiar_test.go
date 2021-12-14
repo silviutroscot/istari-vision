@@ -1,6 +1,7 @@
 package fetcher
 
 import (
+	"math/big"
 	"net/http"
 	"net/http/httptest"
 	"testing"
@@ -11,18 +12,26 @@ import (
 )
 
 func Test_MexEconomicsFetcherMaiar_GetMexEconomics(t *testing.T) {
+	// set up
 	t.Parallel()
 	log.SetLevel(log.DebugLevel)
 
+	bigFLoatZero := big.NewFloat(0)
+
 	t.Run("live_testnet", func(t *testing.T) {
 		fetcher := MexEconomicsFetcherMaiar{
-			ApiEndpoint: "https://testnet-exchange-graph.elrond.com/graphql",
+			ApiEndpoint: "https://graph.maiar.exchange/graphql",
 		}
 
 		economics, err := fetcher.FetchMexEconomics()
 		require.NoError(t, err)
 
-		// todo: add some asserts on price etc
+		assert.True(t, economics.LockedRewardsAPR.Cmp(bigFLoatZero) > 0,
+			"MEX LockedRewardsAPR is %s which is lower than 0", economics.LockedRewardsAPR.String())
+		assert.True(t, economics.UnlockedRewardsAPR.Cmp(bigFLoatZero) > 0,
+			"MEX UnlockedRewardsAPR is %s which is lower than 0", economics.UnlockedRewardsAPR.String())
+		assert.True(t, economics.Price.Cmp(bigFLoatZero) > 0,
+			"MEX price is %s which is lower than 0", economics.UnlockedRewardsAPR.String())
 
 		t.Logf("lockedRewardsAPR=%s unlockedRewardsAPR=%s price=%s",
 			economics.LockedRewardsAPR.String(), economics.UnlockedRewardsAPR.String(), economics.Price.String())
