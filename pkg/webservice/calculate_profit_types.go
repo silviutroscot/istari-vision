@@ -104,6 +104,13 @@ func (payload *CalculateStrategiesRequestPayload) ToStrategiesInput() (*service.
 	strategiesInput.InvestmentDurationInDays = payload.InvestmentDurationInDays
 	strategiesInput.RedelegationIntervalInDays = payload.RedelegationPeriodInDays
 
+	// verify that the sum of percentages in MEX and EGLD is 100
+	percentageSum := &big.Float{}
+	percentageSum.Add(strategiesInput.PercentageOfPortfolioInEgld, strategiesInput.PercentageOfPortfolioInMex)
+	if !service.BigFloatsAreEqual(*percentageSum, *service.BigFloatOneHundred) {
+		errs = append(errs, fmt.Errorf("the sum of the pecentages is %s, not 100%", percentageSum.String()))
+	}
+
 	if len(errs) != 0 {
 		return nil, errs
 	}
