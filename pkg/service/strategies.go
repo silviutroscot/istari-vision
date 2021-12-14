@@ -26,6 +26,8 @@ func (s *Service) CalculateStrategies(input *StrategiesInput, egldStakingProvide
 	// todo: if the user provides percentage of portofolio in egld do this, else don't match the distribution as it is not provided
 	egldToBeInvested, mexToBeInvested :=
 		s.SwapTokensToMatchDistribution(input.EgldTokensInvested, input.MexTokensInvested, input.PercentageOfPortfolioInEgld, egldInitialPrice, mexInitialPrice)
+	input.EgldTokensInvested = egldToBeInvested
+	input.MexTokensInvested = mexToBeInvested
 
 	// find the staking provider in the list of staking providers and retrieve its APR
 	egldStakingProviderWasFound := false
