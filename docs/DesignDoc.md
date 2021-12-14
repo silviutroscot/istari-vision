@@ -70,6 +70,7 @@
 
 ## TODO in the future/if more time is provided
 
+- Very important: use Bigint instead of float, to avoid precision loss
 - Split the work left into epics and tasks and create a Jira/Trello board for the tasks, estimate their duration and
   prioritise them
 

@@ -4,7 +4,6 @@ import (
 	"math/big"
 	"testing"
 
-	"github.com/silviutroscot/istari-challenge/pkg/log"
 	"github.com/stretchr/testify/assert"
 )
 
@@ -14,19 +13,19 @@ func Test_SwapTokens(t *testing.T) {
 
 	t.Run("equal USD value", func(t *testing.T) {
 		// arrange test
-		firstTokenValueInUSD := big.NewFloat(0.0009656114709)
-		secondTokenValueInUSD := big.NewFloat(0.0009656114709)
-		tokenAmount := big.NewFloat(329918.56931317)
+		firstTokenValueInUSD := big.NewFloat(0.000965611)
+		secondTokenValueInUSD := big.NewFloat(0.000965611)
+		tokenAmount := big.NewFloat(329918)
 
 		// act
 		secondTokenConvertedAmount := SwapTokens(tokenAmount, firstTokenValueInUSD, secondTokenValueInUSD)
 		firstTokenConvertedAmount := SwapTokens(tokenAmount, secondTokenValueInUSD, firstTokenValueInUSD)
 
 		// assert
-		assert.Equal(t, &tokenAmount, &secondTokenConvertedAmount,
+		assert.True(t, BigFloatsAreEqual(*tokenAmount, *secondTokenConvertedAmount),
 			"the amount of secondToken received after swapping %d firstTokens is %d and the expected amount is %d",
 			&tokenAmount, &secondTokenConvertedAmount, &tokenAmount)
-		assert.Equal(t, &tokenAmount, &firstTokenConvertedAmount,
+		assert.True(t, BigFloatsAreEqual(*tokenAmount, *firstTokenConvertedAmount),
 			"the amount of firstToken received after swapping %d secondTokens is %d and the expected amount is %d",
 			&tokenAmount, &firstTokenConvertedAmount, &tokenAmount)
 	})
@@ -44,10 +43,10 @@ func Test_SwapTokens(t *testing.T) {
 		firstTokenConvertedAmount := SwapTokens(tokenAmount, secondTokenValueInUSD, firstTokenValueInUSD)
 
 		// assert and round to precision=30
-		assert.Equal(t, expectedSecondTokenAmountAfterSwap.Cmp(secondTokenConvertedAmount.SetPrec(30)), 0
+		assert.True(t, BigFloatsAreEqual(*expectedSecondTokenAmountAfterSwap, *secondTokenConvertedAmount),
 			"the amount of secondToken received after swapping %v firstTokens is %v and the expected amount is %v",
 			tokenAmount, secondTokenConvertedAmount, expectedSecondTokenAmountAfterSwap)
-		assert.Equal(t, expectedFirstTokenAmountAfterSwap.SetPrec(30), firstTokenConvertedAmount.SetPrec(30),
+		assert.True(t, BigFloatsAreEqual(*expectedFirstTokenAmountAfterSwap, *firstTokenConvertedAmount),
 			"the amount of firstToken received after swapping %v secondTokens is %v and the expected amount is %v",
 			tokenAmount, firstTokenConvertedAmount, expectedFirstTokenAmountAfterSwap)
 	})
@@ -64,11 +63,11 @@ func Test_SwapTokens(t *testing.T) {
 		secondTokenConvertedAmount := SwapTokens(tokenAmount, firstTokenValueInUSD, secondTokenValueInUSD)
 		firstTokenConvertedAmount := SwapTokens(tokenAmount, secondTokenValueInUSD, firstTokenValueInUSD)
 
-		// assert and round to precision=30
-		assert.Equal(t, expectedSecondTokenAmountAfterSwap.SetPrec(30), secondTokenConvertedAmount.SetPrec(30),
+		// assert
+		assert.True(t, BigFloatsAreEqual(*expectedSecondTokenAmountAfterSwap, *secondTokenConvertedAmount),
 			"the amount of secondToken received after swapping %v firstTokens is %v and the expected amount is %v",
 			tokenAmount, secondTokenConvertedAmount, expectedSecondTokenAmountAfterSwap)
-		assert.Equal(t, expectedFirstTokenAmountAfterSwap.SetPrec(30), firstTokenConvertedAmount.SetPrec(30),
+		assert.True(t, BigFloatsAreEqual(*expectedFirstTokenAmountAfterSwap, *firstTokenConvertedAmount),
 			"the amount of firstToken received after swapping %v secondTokens is %v and the expected amount is %v",
 			tokenAmount, firstTokenConvertedAmount, expectedFirstTokenAmountAfterSwap)
 	})

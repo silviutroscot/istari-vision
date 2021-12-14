@@ -52,7 +52,7 @@ mod:
 	go mod verify
 
 cover:
-	go tool cover -html=$(OUT_DIR)/$(COV_FILE)
+	go tool cover -html=$(OUT_DIR)/$(COV_FILE) -o ./frontend/cover.html
 
 test-deps:
 	go test all

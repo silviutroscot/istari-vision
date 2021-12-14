@@ -32,7 +32,6 @@ func (s *Service) CacheWarmup() error {
 }
 
 // todo: re-think caching to include both "computational" caching and "display purpose" caching
-
 func (s *Service) updateCache() []error {
 	anyError := make([]error, 0, 3)
 

@@ -1,6 +1,7 @@
 package webservice
 
 import (
+	"errors"
 	"fmt"
 	"math/big"
 	
@@ -110,7 +111,7 @@ func (payload *CalculateStrategiesRequestPayload) ToStrategiesInput() (*service.
 	percentageSum := &big.Float{}
 	percentageSum.Add(strategiesInput.PercentageOfPortfolioInEgld, strategiesInput.PercentageOfPortfolioInMex)
 	if !service.BigFloatsAreEqual(*percentageSum, *service.BigFloatOneHundred) {
-		errs = append(errs, fmt.Errorf("the sum of the pecentages is %s, not 100%", percentageSum.String()))
+		errs = append(errs, errors.New("the sum of the pecentages is not 100%"))
 	}
 
 	if len(errs) != 0 {

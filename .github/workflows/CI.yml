@@ -22,10 +22,6 @@ jobs:
       - name: Build
         run: make build
 
-#todo: improve this to start redis so we can test all scenarios
-#      - name: Start_Redis
-#        run: IMAGE=istari IMAGE_FRONTEND=istari-f docker-compose up redis-01
-
       - name: Test
         run: make test
 

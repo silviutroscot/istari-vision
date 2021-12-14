@@ -10,6 +10,9 @@ var (
 )
 
 func BigFloatsAreEqual(x, y big.Float) bool {
-
-	return x.Sub(&x, &y).Abs(&x).Cmp(EPSILON) < 1
+	copyX := &big.Float{}
+	copyY := &big.Float{}
+	x.Copy(copyX)
+	y.Copy(copyY)
+	return copyX.Sub(copyX, copyY).Abs(copyX).Cmp(EPSILON) < 1
 }
